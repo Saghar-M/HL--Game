@@ -222,6 +222,7 @@ while rounds_played < num_rounds:
     print()
 
     # Round ends here
+
     # if user has entered exit code, end game!!
     if end_game == "yes":
         break
