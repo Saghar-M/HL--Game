@@ -45,28 +45,44 @@ Good luck
 
 # cheks for na integer with optional upper /
 # lower limits and an optional exit code for infinite mode
-# quitting the game
+# / quitting the game
 
 def int_check(question, low=None, high=None, exit_code=None):
+
+    # if any integer is allowed...
+    if low is None and high is None:
+        error = "please enter an integer"
+
+    # if the number needs to be more than an
+    # integer (ie: rounds / 'high number')
+    elif low is not None and high is None:
+        error = (f"Please enter an integer that is"
+                 f"more than / equal to {low}")
+    # if the number needs to between low and high
+    else:
+        error = (f"Please enter an integer that"
+                 f"is between {low} and {high} (inclusive)")
     while True:
+        response = input(question).lower()
 
-        error = "please enter an integer that is 1 or more. "
-
-        to_check = input(question)
-
-        # check for infinite mode
-        if to_check == "":
-            return "infinite"
+        # check for infinite mode / exit code
+        if response == exit_code:
+            return response
 
         try:
-            response = int(to_check)
+            response = int(response)
 
-            # Checks that the number is more than / equal to 1
-            if response <1:
-                 print(error)
+            # check the integer is not too low...
+            if low is not None and response < low:
+                print(error)
+
+            # check response is more than the low number
+            elif high is not None and response > high:
+                print(error)
+
+            # if response is valid, return it
             else:
                 return response
-
 
         except ValueError:
              print(error)
@@ -131,7 +147,7 @@ while rounds_played < num_rounds:
     if mode == "infinite":
         rounds_heading = f"\n 💿💿💿 Round {rounds_played +1} (infinite Mode) 💿💿💿 "
     else:
-        rounds_heading = f"f\n 💿💿💿 Round {rounds_played +1} of {num_rounds} 💿💿💿 "
+        rounds_heading = f"\n 💿💿💿 Round {rounds_played +1} of {num_rounds} 💿💿💿 "
 
     print(rounds_heading)
 
@@ -149,7 +165,7 @@ while rounds_played < num_rounds:
     while guess != secret and guesses_used < guesses_allowed:
 
         # ask the user to guess the number...
-        guess = int_check("Guess: ", low_num, "xxx")
+        guess = int_check("Guess: ", low_num, high_num, "xxx")
 
         # check that they don't want to quit
         if guess == "xxx":
@@ -201,7 +217,7 @@ while rounds_played < num_rounds:
 
         # Additional Feedback (warn user that they are running out  of guesses)
         if guesses_used == guesses_allowed - 1:
-            print("\n 💣💣💣 Careful - you have one guess left! 💣💣💣\n1")
+            print("\n 💣💣💣 Careful - you have one guess left! 💣💣💣\n")
 
     print()
 
@@ -249,3 +265,9 @@ if rounds_played > 0:
     if see_history == "yes":
         for item in game_history:
             print(item)
+
+    print()
+    print(" Thanks for playing. ")
+
+else:
+    print("🐔🐔🐔 Opps you chickened out!🐔🐔🐔 ")
