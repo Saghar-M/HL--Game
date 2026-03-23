@@ -106,7 +106,7 @@ end_game = "no"
 feedback=""
 
 game_history=[]
-all_scores =[]
+all_scores =[0]
 
 
 print("🔼🔼🔼 Welcome to the Higher Lower game🔻🔻🔻")
@@ -212,6 +212,8 @@ while rounds_played < num_rounds:
         else:
             feedback = "Sorry - you have no more guesses. You lose this round!"
 
+            all_scores.append(guesses_used)
+
         # print feedback to user
         print(feedback)
 
@@ -230,14 +232,7 @@ while rounds_played < num_rounds:
 
     # Add round result to game history
     history_feedback = f"Round {rounds_played}: {feedback}"
-
-    user_choice =  input("Choose: ")
-
-    # if user choose, break the loop
-    if user_choice == "xxx":
-        break
-
-    rounds_played += 1
+    game_history.append(history_feedback)
 
     # if users are in infinite mode, increase number of rounds!
     if mode == "infinite":
@@ -261,8 +256,9 @@ if rounds_played > 0:
     print("\n📊📊📊 statistics 📊📊📊 ")
     print(f"Best: {best_score} | Worst: {worst_score} | Average: {average_score:.2f} ")
     print()
+
     # Display the game history on request
-    see_history = yes_no("Do you want to see your game history? ")
+    see_history = yes_no("\n Do you want to see your game history? ")
     if see_history == "yes":
         for item in game_history:
             print(item)
