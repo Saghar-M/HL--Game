@@ -106,7 +106,7 @@ end_game = "no"
 feedback=""
 
 game_history=[]
-all_scores =[0]
+all_scores =[]
 
 
 print("🔼🔼🔼 Welcome to the Higher Lower game🔻🔻🔻")
@@ -229,6 +229,8 @@ while rounds_played < num_rounds:
     if end_game == "yes":
         break
     rounds_played += 1
+
+    all_scores.append(guesses_used)
 
     # Add round result to game history
     history_feedback = f"Round {rounds_played}: {feedback}"
